@@ -44,16 +44,16 @@ public class DeviceRepositoryImpl implements DeviceRepository{
             rs.getString("name"),
             rs.getString("type"),
             rs.getString("status"),
-            rs.getDate("createDateTime").toLocalDate(),
-            rs.getString("room"));
+            rs.getDate("created_at").toLocalDate(),
+            rs.getString("id_room"));
     }
 
     @Override
-    public List<Device> findByRoom(String room) {
+    public List<Device> findByRoom(String id_room) {
         List<Device> list = new ArrayList<>();
         try (Connection connection= dataSource.getConnection()){
             PreparedStatement statement = connection.prepareStatement("SELECT * from room where device=?");
-            statement.setString(1, room);
+            statement.setString(1, id_room);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -85,13 +85,13 @@ public class DeviceRepositoryImpl implements DeviceRepository{
     @Override
     public boolean persist(Device device) {
         try (Connection connection = dataSource.getConnection()){
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO device (name, type, status, createDateTime, room)VALUE (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO device (name, type, status, created_at, id_room)VALUE (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, device.getName());
             statement.setString(2, device.getType());
             statement.setString(3, device.getStatus());
-            statement.setDate(4, device.getCreateDateTime()!= null ? Date.valueOf(device.getCreateDateTime()):null);
-            statement.setString(5, device.getRoom());
+            statement.setDate(4, device.getcreated_at()!= null ? Date.valueOf(device.getcreated_at()):null);
+            statement.setString(5, device.getId_room());
 
             statement.executeUpdate(); 
             ResultSet rs = statement.getGeneratedKeys();
@@ -108,13 +108,13 @@ public class DeviceRepositoryImpl implements DeviceRepository{
     @Override
     public boolean update(Device device) {
         try (Connection connection = dataSource.getConnection()){
-            PreparedStatement statement = connection.prepareStatement("UPDATE device SET name=?, type=?, status=?, createDateTime=?, room=? WHERE id=?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE device SET name=?, type=?, status=?, created_at=?, id_room=? WHERE id=?");
             
             statement.setString(1, device.getName());
             statement.setString(2, device.getType());
             statement.setString(3, device.getStatus());
-            statement.setDate(4, device.getCreateDateTime() != null ?Date.valueOf(device.getCreateDateTime()):null);
-            statement.setString(5, device.getRoom());
+            statement.setDate(4, device.getcreated_at() != null ?Date.valueOf(device.getcreated_at()):null);
+            statement.setString(5, device.getId_room());
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();

@@ -5,5 +5,5 @@ import java.util.List;
 import com.ehouse_spring.ehouse.entity.Device;
 
 public interface DeviceRepository extends CrudRepository<Device>{
-    List<Device> findByRoom(String room);
+    List<Device> findByRoom(int id_room);
 }

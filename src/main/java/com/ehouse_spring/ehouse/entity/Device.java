@@ -15,9 +15,21 @@ public class Device {
     @NotBlank
     private String status;
     @NotBlank
-    private LocalDate createDateTime;
+    private LocalDate created_at;
     @NotBlank
-    private String room;
+    private String id_room;
+
+
+    public String getId_room() {
+        return id_room;
+    }
+
+
+
+    public void setId_room(String id_room) {
+        this.id_room = id_room;
+    }
+
 
 
     public Device() {
@@ -26,24 +38,24 @@ public class Device {
 
 
     public Device(Integer id, @NotBlank String name, @NotBlank String type, @NotBlank String status,
-            @NotBlank LocalDate createDateTime, @NotBlank String room) {
+            @NotBlank LocalDate created_at, @NotBlank String id_room) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.status = status;
-        this.createDateTime = createDateTime;
-        this.room = room;
+        this.created_at = created_at;
+        this.id_room = id_room;
     }
 
 
 
     public Device(@NotBlank String name, @NotBlank String type, @NotBlank String status,
-            @NotBlank @NotBlank LocalDate createDateTime, @NotBlank String room) {
+            @NotBlank @NotBlank LocalDate created_at, @NotBlank String id_room) {
         this.name = name;
         this.type = type;
         this.status = status;
-        this.createDateTime = createDateTime;
-        this.room = room;
+        this.created_at = created_at;
+        this.id_room = id_room;
     }
 
 
@@ -96,27 +108,16 @@ public class Device {
 
 
 
-    public @NotBlank LocalDate getCreateDateTime() {
-        return createDateTime;
+    public @NotBlank LocalDate getcreated_at() {
+        return created_at;
     }
 
 
 
-    public void setCreateDateTime(@NotBlank LocalDate createDateTime) {
-        this.createDateTime = createDateTime;
+    public void setcreated_at(@NotBlank LocalDate created_at) {
+        this.created_at = created_at;
     }
 
-
-
-    public String getRoom() {
-        return room;
-    }
-
-
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
     
 
 }
