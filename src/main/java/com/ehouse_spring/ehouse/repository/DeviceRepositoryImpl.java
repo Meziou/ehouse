@@ -45,15 +45,15 @@ public class DeviceRepositoryImpl implements DeviceRepository{
             rs.getString("type"),
             rs.getString("status"),
             rs.getDate("created_at").toLocalDate(),
-            rs.getString("id_room"));
+            rs.getInt("id_room"));
     }
 
     @Override
-    public List<Device> findByRoom(String id_room) {
+    public List<Device> findByRoom(int id_room) {
         List<Device> list = new ArrayList<>();
         try (Connection connection= dataSource.getConnection()){
             PreparedStatement statement = connection.prepareStatement("SELECT * from room where device=?");
-            statement.setString(1, id_room);
+            statement.setInt(1, id_room);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -90,8 +90,8 @@ public class DeviceRepositoryImpl implements DeviceRepository{
             statement.setString(1, device.getName());
             statement.setString(2, device.getType());
             statement.setString(3, device.getStatus());
-            statement.setDate(4, device.getcreated_at()!= null ? Date.valueOf(device.getcreated_at()):null);
-            statement.setString(5, device.getId_room());
+            statement.setDate(4, device.getCreated_at()!= null ? Date.valueOf(device.getCreated_at()):null);
+            statement.setInt(5, device.getId_room());
 
             statement.executeUpdate(); 
             ResultSet rs = statement.getGeneratedKeys();
@@ -113,8 +113,8 @@ public class DeviceRepositoryImpl implements DeviceRepository{
             statement.setString(1, device.getName());
             statement.setString(2, device.getType());
             statement.setString(3, device.getStatus());
-            statement.setDate(4, device.getcreated_at() != null ?Date.valueOf(device.getcreated_at()):null);
-            statement.setString(5, device.getId_room());
+            statement.setDate(4, device.getCreated_at() != null ?Date.valueOf(device.getCreated_at()):null);
+            statement.setInt(5, device.getId_room());
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();

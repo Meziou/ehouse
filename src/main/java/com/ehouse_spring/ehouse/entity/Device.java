@@ -4,6 +4,7 @@ package com.ehouse_spring.ehouse.entity;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class Device {
     
@@ -14,19 +15,19 @@ public class Device {
     private String type;
     @NotBlank
     private String status;
-    @NotBlank
+    @NotNull
     private LocalDate created_at;
-    @NotBlank
-    private String id_room;
+    @NotNull
+    private int id_room;
 
 
-    public String getId_room() {
+    public @NotNull int getId_room() {
         return id_room;
     }
 
 
 
-    public void setId_room(String id_room) {
+    public void setId_room(int id_room) {
         this.id_room = id_room;
     }
 
@@ -38,7 +39,7 @@ public class Device {
 
 
     public Device(Integer id, @NotBlank String name, @NotBlank String type, @NotBlank String status,
-            @NotBlank LocalDate created_at, @NotBlank String id_room) {
+            @NotNull LocalDate created_at, @NotNull int id_room) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -50,7 +51,7 @@ public class Device {
 
 
     public Device(@NotBlank String name, @NotBlank String type, @NotBlank String status,
-            @NotBlank @NotBlank LocalDate created_at, @NotBlank String id_room) {
+            @NotBlank @NotNull LocalDate created_at, @NotNull int id_room) {
         this.name = name;
         this.type = type;
         this.status = status;
@@ -108,13 +109,13 @@ public class Device {
 
 
 
-    public @NotBlank LocalDate getcreated_at() {
+    public @NotNull LocalDate getCreated_at() {
         return created_at;
     }
 
 
 
-    public void setcreated_at(@NotBlank LocalDate created_at) {
+    public void setCreated_at(@NotNull LocalDate created_at) {
         this.created_at = created_at;
     }
 

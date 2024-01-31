@@ -15,38 +15,38 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ehouse_spring.ehouse.entity.Device;
-import com.ehouse_spring.ehouse.entity.repository.interfaces.DeviceRepository;
+import com.ehouse_spring.ehouse.entity.Room;
+import com.ehouse_spring.ehouse.entity.repository.interfaces.RoomRepository;
 
 import jakarta.validation.Valid;
 
+@RestController
+@RequestMapping("/api/room")
+public class RoomController {
 
-@RestController //annotation obligatoire  pour faire un contrôleur de type rest
-@RequestMapping("/api/device") //permet de mettre un prefix à toutes les routes définies dans ce contrôleur
-public class DeviceController {
-
-    @Autowired // Permet d'injecter un autre composant connu de spring dans cette classe (spring se charge de l'instanciation)
-    private DeviceRepository repo;
+    @Autowired
+    private RoomRepository repo;
 
     @GetMapping
-    public List<Device> getAll(){
+    public List<Room> getAll(){
         return repo.findAll();
     }
 
     @GetMapping("/{id}")
-    public Device one(@PathVariable int id){
-        Device device = repo.find(id);
-        if (device == null) {
+    public Room one(@PathVariable int id){
+        Room room = repo.find(id);
+        if (room == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return device;
+        return room;
+
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Device add(@Valid @RequestBody Device device) {
-        repo.persist(device);
-        return device;
+    public Room add(@Valid @RequestBody Room room) {
+        repo.persist(room);
+        return room;
     }
 
     @DeleteMapping("/{id}")
@@ -57,23 +57,14 @@ public class DeviceController {
         }
     }
 
-
     @PatchMapping("/{id}")
-    public Device update(@PathVariable int id, @RequestBody Device device) {
-        Device toUpdate = one(id);
-        if(device.getName() != null) {
-            toUpdate.setName(device.getName());
+    public Room update(@PathVariable int id, @RequestBody Room room) {
+        Room toUpdate = one(id);
+        if(room.getName() != null) {
+            toUpdate.setName(room.getName());
         }
-        if(device.getType() != null) {
-            toUpdate.setType(device.getType());
-        }
-
-        if(device.getStatus() != null) {
-            toUpdate.setStatus(device.getStatus());
-        }
-
-        if(device.getCreated_at() != null) {
-            toUpdate.setCreated_at(device.getCreated_at());
+        if(room.getCreated_at() != null) {
+            toUpdate.setCreated_at(room.getCreated_at());
         }
 
         repo.update(toUpdate);

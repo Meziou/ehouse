@@ -1,31 +1,33 @@
 package com.ehouse_spring.ehouse.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class Room {
 
     private Integer id;
-
     @NotBlank
     private String name;
-
-    @NotBlank
-    private LocalDateTime createdDateTime;
-
-    public Room() {
-    }
-
-    public Room(@NotBlank String name, @NotBlank LocalDateTime createdDateTime) {
+    private LocalDate created_at;
+    @NotNull
+    private int id_house;
+    
+    public Room(@NotBlank String name, @NotBlank LocalDate created_at, @NotBlank int id_house) {
         this.name = name;
-        this.createdDateTime = createdDateTime;
+        this.created_at = created_at;
+        this.id_house = id_house;
     }
 
-    public Room(Integer id, @NotBlank String name, @NotBlank LocalDateTime createdDateTime) {
+    public Room(Integer id, @NotBlank String name, @NotBlank LocalDate created_at, @NotBlank int id_house) {
         this.id = id;
         this.name = name;
-        this.createdDateTime = createdDateTime;
+        this.created_at = created_at;
+        this.id_house = id_house;
+    }
+
+    public Room() {
     }
 
     public Integer getId() {
@@ -44,12 +46,22 @@ public class Room {
         this.name = name;
     }
 
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
+    public LocalDate getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedDateTime(LocalDateTime createdDateTime) {
-        this.createdDateTime = createdDateTime;
+    public void setCreated_at(LocalDate created_at) {
+        this.created_at = created_at;
     }
+
+    public int getId_house() {
+        return id_house;
+    }
+
+    public void setId_house(int id_house) {
+        this.id_house = id_house;
+    }
+    
+   
     
 }
