@@ -40,7 +40,7 @@ public class RoomRepositoryImpl implements RoomRepository{
 
     private Room sqlToRoom(ResultSet rs) throws SQLException{
         return new Room(
-            rs.getInt("id"),
+            rs.getLong("id"),
             rs.getString("name"),
             rs.getDate("created_at").toLocalDate(),
             rs.getInt("id_house")
@@ -49,7 +49,6 @@ public class RoomRepositoryImpl implements RoomRepository{
 
     @Override
     public List<Room> findByHouse(String house) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByHouse'");
     }
     
@@ -81,7 +80,7 @@ public class RoomRepositoryImpl implements RoomRepository{
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
-            room.setId(rs.getInt(1));
+            room.setId(rs.getLong(1));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,7 +95,7 @@ public class RoomRepositoryImpl implements RoomRepository{
             statement.setString(1, room.getName());
             statement.setDate(2, room.getCreated_at()!= null ? Date.valueOf(room.getCreated_at()):null);
             statement.setInt(3, room.getId_house());
-
+            statement.setLong(4, room.getId());
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();

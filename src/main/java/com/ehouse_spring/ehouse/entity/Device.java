@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class Device {
     
-    private Integer id;
+    private Long id;
     @NotBlank
     private String name;
     @NotBlank
@@ -38,7 +38,7 @@ public class Device {
 
 
 
-    public Device(Integer id, @NotBlank String name, @NotBlank String type, @NotBlank String status,
+    public Device(Long id, @NotBlank String name, @NotBlank String type, @NotBlank String status,
             @NotNull LocalDate created_at, @NotNull int id_room) {
         this.id = id;
         this.name = name;
@@ -61,13 +61,13 @@ public class Device {
 
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
 
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

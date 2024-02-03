@@ -40,7 +40,7 @@ public class DeviceRepositoryImpl implements DeviceRepository{
     
     private Device sqlToDevice(ResultSet rs) throws SQLException{
         return new Device(
-            rs.getInt("id"),
+            rs.getLong("id"),
             rs.getString("name"),
             rs.getString("type"),
             rs.getString("status"),
@@ -52,7 +52,7 @@ public class DeviceRepositoryImpl implements DeviceRepository{
     public List<Device> findByRoom(int id_room) {
         List<Device> list = new ArrayList<>();
         try (Connection connection= dataSource.getConnection()){
-            PreparedStatement statement = connection.prepareStatement("SELECT * from room where device=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM room WHERE device=?");
             statement.setInt(1, id_room);
             ResultSet rs = statement.executeQuery();
 
@@ -69,7 +69,7 @@ public class DeviceRepositoryImpl implements DeviceRepository{
     @Override
     public Device find(Integer id) {
         try (Connection connection = dataSource.getConnection()){
-            PreparedStatement statement = connection.prepareStatement("SELECT * from device where id=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM device WHERE id=?");
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
@@ -96,7 +96,7 @@ public class DeviceRepositoryImpl implements DeviceRepository{
             statement.executeUpdate(); 
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
-            device.setId(rs.getInt(1));
+            device.setId(rs.getLong(1));
 
             return true;
         } catch (Exception e) {
@@ -115,6 +115,7 @@ public class DeviceRepositoryImpl implements DeviceRepository{
             statement.setString(3, device.getStatus());
             statement.setDate(4, device.getCreated_at() != null ?Date.valueOf(device.getCreated_at()):null);
             statement.setInt(5, device.getId_room());
+            statement.setLong(6, device.getId());
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,8 +125,7 @@ public class DeviceRepositoryImpl implements DeviceRepository{
 
     @Override
     public boolean delete(Integer id) {
-        try {
-            Connection connection = dataSource.getConnection();
+        try (Connection connection = dataSource.getConnection();){
             PreparedStatement statement = connection.prepareStatement("DELETE FROM device WHERE id=?");
             statement.setInt(1, id);
             return statement.executeUpdate()==1;

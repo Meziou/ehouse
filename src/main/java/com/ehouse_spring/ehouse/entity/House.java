@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class House {
 
-    private Integer id;
+    private Long id;
 
     @NotBlank
     private String name;
@@ -16,16 +16,16 @@ public class House {
         this.name = name;
     }
 
-    public House(Integer id, @NotBlank String name) {
+    public House(Long id, @NotBlank String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

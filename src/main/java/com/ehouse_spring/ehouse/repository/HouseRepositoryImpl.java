@@ -39,9 +39,8 @@ public class HouseRepositoryImpl implements HouseRepository{
 
     private House sqlToHouse(ResultSet rs) throws SQLException{
         return new House(
-            rs.getInt("id"),
-            rs.getString("name")
-        );
+            rs.getLong("id"),
+            rs.getString("name"));
     }
 
     @Override
@@ -63,14 +62,16 @@ public class HouseRepositoryImpl implements HouseRepository{
     @Override
     public boolean persist(House house) {
         try (Connection connection = dataSource.getConnection()){
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO room (name, created_at, id_house) VALUE (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO house (name) VALUE (?)", Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, house.getName());
 
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
-            house.setId(rs.getInt(1));
+            house.setId(rs.getLong(1));
+
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,9 +81,10 @@ public class HouseRepositoryImpl implements HouseRepository{
     @Override
     public boolean update(House house) {
         try(Connection connection =dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE house SET name=?, created_at=?, id_house=? WHERE id=?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE house SET name=? WHERE id=?");
 
             statement.setString(1, house.getName());
+            statement.setLong(2, house.getId());
 
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
@@ -96,7 +98,7 @@ public class HouseRepositoryImpl implements HouseRepository{
         try(Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM house WHERE id=?");
             statement.setInt(1, id);
-            return statement.executeUpdate() ==1;
+            return statement.executeUpdate()==1;
         } catch (Exception e) {
             e.printStackTrace();
         }

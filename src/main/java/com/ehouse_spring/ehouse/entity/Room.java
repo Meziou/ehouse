@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class Room {
 
-    private Integer id;
+    private Long id;
     @NotBlank
     private String name;
     private LocalDate created_at;
@@ -20,7 +20,7 @@ public class Room {
         this.id_house = id_house;
     }
 
-    public Room(Integer id, @NotBlank String name, @NotBlank LocalDate created_at, @NotBlank int id_house) {
+    public Room(Long id, @NotBlank String name, @NotBlank LocalDate created_at, @NotBlank int id_house) {
         this.id = id;
         this.name = name;
         this.created_at = created_at;
@@ -30,11 +30,11 @@ public class Room {
     public Room() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

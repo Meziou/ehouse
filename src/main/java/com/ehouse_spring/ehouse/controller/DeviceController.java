@@ -48,16 +48,7 @@ public class DeviceController {
         repo.persist(device);
         return device;
     }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        if(!repo.delete(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
-
-
+    
     @PatchMapping("/{id}")
     public Device update(@PathVariable int id, @RequestBody Device device) {
         Device toUpdate = one(id);
@@ -67,16 +58,25 @@ public class DeviceController {
         if(device.getType() != null) {
             toUpdate.setType(device.getType());
         }
-
+        
         if(device.getStatus() != null) {
             toUpdate.setStatus(device.getStatus());
         }
-
+        
         if(device.getCreated_at() != null) {
             toUpdate.setCreated_at(device.getCreated_at());
         }
-
+        
         repo.update(toUpdate);
         return toUpdate;
     }
+    
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        if(!repo.delete(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
