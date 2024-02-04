@@ -29,11 +29,20 @@ public class HouseController {
     @Autowired
     private HouseRepository repo;
 
+    /**
+     * @param house the house to be added
+     * @return list of all the houses
+     */
     @GetMapping
     public List<House> getAll(){
         return repo.findAll();
     }
 
+    /**
+     * 
+     * @param id the id of the house
+     * @return the house with the given id
+     */
     @GetMapping("/{id}")
     public House one(@PathVariable int id){
         House house = repo.find(id);
@@ -43,6 +52,11 @@ public class HouseController {
         return house;
     }
 
+    /**
+     * 
+     * @param house the house to be added
+     * @return the added house
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public House add(@Valid @RequestBody House house) {
@@ -50,6 +64,12 @@ public class HouseController {
         return house;
     }
     
+    /**
+     * 
+     * @param id the id of the house
+     * @param house the house to be updated
+     * @return the updated house
+     */
     @PatchMapping("/{id}")
     public House update(@PathVariable int id, @RequestBody House house){
         House toUpdate = one(id);
@@ -61,6 +81,10 @@ public class HouseController {
         return toUpdate;
     }
 
+    /**
+     * @param id the id of the house
+     * delete the house with the given id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){

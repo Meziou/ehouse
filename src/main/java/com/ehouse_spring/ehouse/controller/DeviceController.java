@@ -28,11 +28,30 @@ public class DeviceController {
     @Autowired // Permet d'injecter un autre composant connu de spring dans cette classe (spring se charge de l'instanciation)
     private DeviceRepository repo;
 
+    /**
+     * @param device the device to be added
+     * @return list of all the devices
+     */
     @GetMapping
     public List<Device> getAll(){
         return repo.findAll();
     }
 
+    /**
+     * 
+     * @param id the id of the device
+     * @return the device with the given id
+     */
+    @GetMapping("/room/{id}")
+    public List<Device> findByRoom(@PathVariable int id){
+        return repo.findByRoom(id);
+    }
+
+    /**
+     * 
+     * @param id the id of the device
+     * @return the device with the given id
+     */
     @GetMapping("/{id}")
     public Device one(@PathVariable int id){
         Device device = repo.find(id);
@@ -42,6 +61,11 @@ public class DeviceController {
         return device;
     }
 
+    /**
+     * 
+     * @param device the device to be added
+     * @return the added device
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Device add(@Valid @RequestBody Device device) {
@@ -49,6 +73,12 @@ public class DeviceController {
         return device;
     }
     
+    /**
+     * 
+     * @param id the id of the device
+     * @param device the device to be updated
+     * @return the updated device
+     */
     @PatchMapping("/{id}")
     public Device update(@PathVariable int id, @RequestBody Device device) {
         Device toUpdate = one(id);
@@ -71,6 +101,10 @@ public class DeviceController {
         return toUpdate;
     }
     
+    /**
+     * @param id the id of the device
+     * delete the device with the given id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {

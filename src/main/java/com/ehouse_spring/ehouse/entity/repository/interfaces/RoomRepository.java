@@ -5,5 +5,5 @@ import java.util.List;
 import com.ehouse_spring.ehouse.entity.Room;
 
 public interface RoomRepository extends CrudRepository<Room>{
-    List<Room> findByHouse(String house);
+    List<Room> findByHouse(int id_house);
 }

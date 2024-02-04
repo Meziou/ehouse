@@ -22,9 +22,14 @@ public class HouseRepositoryImpl implements HouseRepository{
     @Autowired
     private DataSource dataSource;
 
+    /**
+     * This method is used to fetch all the houses from the database.
+     * 
+     * @return a list of houses
+     */
     @Override
     public List<House> findAll() {
-         List<House> list = new ArrayList<>();
+        List<House> list = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()){
             PreparedStatement statement = connection.prepareStatement("SELECT * from house");
             ResultSet rs = statement.executeQuery();
@@ -37,12 +42,24 @@ public class HouseRepositoryImpl implements HouseRepository{
         return list;
     }
 
+    /**
+     * This method maps a SQL result set to a House object
+     * 
+     * @param rs the SQL result set
+     * @return a House object
+     */
     private House sqlToHouse(ResultSet rs) throws SQLException{
         return new House(
             rs.getLong("id"),
             rs.getString("name"));
     }
 
+    /**
+     * This method is used to fetch a house from the database based on its id.
+     * 
+     * @param id the id of the house
+     * @return the house with the specified id, or null if no house with the
+     */
     @Override
     public House find(Integer id) {
         try (Connection connection = dataSource.getConnection()){
@@ -59,6 +76,12 @@ public class HouseRepositoryImpl implements HouseRepository{
         return null;
     }
 
+    /**
+     * This method is used to persist a house into the database.
+     * 
+     * @param house the house to be persisted
+     * @return true if the house was persisted successfully, false otherwise
+    */
     @Override
     public boolean persist(House house) {
         try (Connection connection = dataSource.getConnection()){
@@ -78,6 +101,12 @@ public class HouseRepositoryImpl implements HouseRepository{
         return false;
     }
 
+    /**
+     * This method is used to update a house in the database.
+     * 
+     * @param house the house to be updated
+     * @return true if the house was updated successfully, false otherwise
+     */
     @Override
     public boolean update(House house) {
         try(Connection connection =dataSource.getConnection()) {
@@ -93,6 +122,12 @@ public class HouseRepositoryImpl implements HouseRepository{
         return false;
     }
 
+    /**
+     * This method is used to delete a house from the database based on its id.
+     * 
+     * @param id the id of the house
+     * @return true if the house was deleted successfully, false otherwise
+     */
     @Override
     public boolean delete(Integer id) {
         try(Connection connection = dataSource.getConnection()) {
