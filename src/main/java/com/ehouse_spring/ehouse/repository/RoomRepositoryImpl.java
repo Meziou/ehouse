@@ -62,6 +62,7 @@ public List<Room> findAll() {
     );
 }
 
+
 /**
  * Returns a list of all rooms in the database that belong to the specified house.
  *
@@ -73,7 +74,7 @@ public List<Room> findByHouse(int id_house) {
     List<Room> list = new ArrayList<>();
     try (Connection connection = dataSource.getConnection()) {
         // create a prepared statement to execute the SQL query
-        PreparedStatement statement = connection.prepareStatement("SELECT * from room WHERE id_house=?");
+        PreparedStatement statement = connection.prepareStatement("SELECT r.*, h.name as house_name FROM room r LEFT JOIN house h ON r.id_house = h.id WHERE r.id_house=?");
         // set the first parameter of the query
         statement.setInt(1, id_house);
         // execute the query and retrieve the results

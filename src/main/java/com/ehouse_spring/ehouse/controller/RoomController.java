@@ -35,7 +35,7 @@ public class RoomController {
     @GetMapping
     public List<Room> getAll(){
         return repo.findAll();
-    }
+    }           
 
     /**
      * 
